@@ -1,4 +1,6 @@
 ﻿using Fiddler;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,6 +15,7 @@ namespace FiddlerComposerX
         private ComposerMod Mod;
         private string InitForm;
         private string LastForm = "";
+        private string InitJson;
 
         public ComposerModForm(ComposerMod mod)
         {
@@ -47,6 +50,7 @@ namespace FiddlerComposerX
         {
             onDeselectedTab(tcRequestMod.SelectedTab.Name);
             InitForm = tbFormMod.Text;
+            InitJson = tbJsonMod.Text;
             var ctx = new RequestContext();
             lbMethod.Text = ctx.Method.Text;
             ctx.Url.Text = UrlStringify();
@@ -65,7 +69,7 @@ namespace FiddlerComposerX
             }
             else if (name == "tabBodyJsonMod")
             {
-
+                tbJsonMod.Text = InitJson = ConvertJson(tbBodyMod.Text, true);
             }
         }
 
@@ -81,7 +85,10 @@ namespace FiddlerComposerX
             }
             else if (name == "tabBodyJsonMod")
             {
-
+                if (tbJsonMod.Text != InitJson)
+                {
+                    tbBodyMod.Text = ConvertJson(tbJsonMod.Text);
+                }
             }
         }
 
@@ -103,6 +110,21 @@ namespace FiddlerComposerX
         {
             string cookie = headers.Split('\n').FirstOrDefault(line => line.Trim().StartsWith("Cookie:", StringComparison.OrdinalIgnoreCase));
             return cookie == null ? "" : JoinLines(cookie.Trim().Substring(7).Trim().Split(';'));
+        }
+
+        private string ConvertJson(string input, bool pretty = false)
+        {
+            if (input.Trim() == "") return input;
+            try
+            {
+                var fmt = pretty ? Formatting.Indented : Formatting.None;
+                return JToken.Parse(input).ToString(fmt);
+            }
+            catch (JsonReaderException ex)
+            {
+                MessageBox.Show(ex.Message, "Parse JSON Error");
+                return input;
+            }
         }
 
         private string UrlStringify()
