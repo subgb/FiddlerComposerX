@@ -35,8 +35,23 @@ namespace FiddlerComposerX
                 }
             };
             FiddlerToolbar.AddToolStripItem(btn);
+            ui.lvSessions.ItemSelectionChanged += SelectedSessionChanged;
         }
-        
+
+        private void SelectedSessionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            var ui = FiddlerApplication.UI;
+            var lv = (ListView)sender;
+            if (lv.SelectedIndices.Count != 1) return;
+            var sess = ui.GetFirstSelectedSession();
+            var size = sess.ResponseBody.Length;
+            if (size < 300e3) return;
+            var page = ui.pageInspector;
+            if (ui.tabsViews.SelectedTab != page) return;
+            var resp = (TabControl)Utils.FindSubControl(page, "tabsResponse");
+            var tab = resp.SelectedTab.Text;
+            if ((tab == "Raw" || tab == "TextView" || tab == "SyntaxView")) resp.SelectTab(1);
+        }
 
         public void OnBeforeUnload()
         {
