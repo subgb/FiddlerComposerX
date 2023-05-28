@@ -11,18 +11,23 @@ namespace FiddlerComposerX
     public class ComposerMod : IFiddlerExtension
     {
         public ComposerModForm View { get; set; }
+        readonly string ModName = "ComposerX";
 
         public void OnLoad()
         {
+            var ui = FiddlerApplication.UI;
+            var icon = ui.tabsViews.ImageList.Images["compose"];
+            ui.imglToolbar.Images.Add(ModName, icon);
+
             var btn = new ToolStripButton();
             btn.ToolTipText = "Popup The ComposerX Mod";
-            btn.ImageIndex = 35;
-            btn.Text = "ComposerX";
+            btn.ImageKey = ModName;
+            btn.Text = ModName;
             btn.Click += delegate
             {
                 if (View==null) {
                     View = new ComposerModForm(this);
-                    View.Show(FiddlerApplication.UI);
+                    View.Show(ui);
                 }
                 else
                 {

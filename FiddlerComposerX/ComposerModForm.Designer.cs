@@ -163,7 +163,7 @@
             this.tabParamsMod.Name = "tabParamsMod";
             this.tabParamsMod.Size = new System.Drawing.Size(552, 336);
             this.tabParamsMod.TabIndex = 1;
-            this.tabParamsMod.Text = "Params";
+            this.tabParamsMod.Text = "Query";
             this.tabParamsMod.UseVisualStyleBackColor = true;
             // 
             // tbParamsMod

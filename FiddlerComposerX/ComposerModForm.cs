@@ -21,9 +21,11 @@ namespace FiddlerComposerX
         {
             Mod = mod;
             InitializeComponent();
-            Left = FiddlerApplication.UI.Right - Width - 20;
-            Top = FiddlerApplication.UI.Top + 200;
-            Icon = FiddlerApplication.UI.Icon;
+            var ui = FiddlerApplication.UI;
+            Left = ui.Right - Width - 20;
+            Top = ui.Top + 200;
+            Icon = ui.Icon;
+            tcRequestMod.ImageList = ui.tabsViews.ImageList;
         }
 
         private void ComposerModForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -35,9 +37,17 @@ namespace FiddlerComposerX
         {
             var ctx = new RequestContext();
             lbMethod.Text = ctx.Method.Text;
-            var uri = new Uri(ctx.Url.Text);
-            tbUrl.Text = uri.GetLeftPart(UriPartial.Path);
-            tbParamsMod.Text = JoinLines(uri.Query.TrimStart('?').Split('&'));
+            try
+            {
+                var uri = new Uri(ctx.Url.Text);
+                tbUrl.Text = uri.GetLeftPart(UriPartial.Path);
+                tbParamsMod.Text = JoinLines(uri.Query.TrimStart('?').Split('&'));
+            }
+            catch
+            {
+                tbUrl.Text = "";
+                tbParamsMod.Text = "";
+            }
             tbHeadersMod.Text = ctx.Headers.Text;
             tbCookiesMod.Text = ParseHeadersCookie(ctx.Headers.Text);
             tbBodyMod.Text = ctx.Body.Text;
@@ -118,10 +128,13 @@ namespace FiddlerComposerX
             try
             {
                 var fmt = pretty ? Formatting.Indented : Formatting.None;
-                return JToken.Parse(input).ToString(fmt);
+                var text =  JToken.Parse(input).ToString(fmt);
+                tabBodyJsonMod.ImageKey = "";
+                return text;
             }
             catch (JsonReaderException ex)
             {
+                tabBodyJsonMod.ImageKey = "Error";
                 MessageBox.Show(ex.Message, "Parse JSON Error");
                 return input;
             }
