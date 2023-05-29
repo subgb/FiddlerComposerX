@@ -255,9 +255,10 @@
             this.Controls.Add(this.lbMethod);
             this.Controls.Add(this.btnImport);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.MinimumSize = new System.Drawing.Size(400, 350);
             this.Name = "ComposerModForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "ComposerX Mod";
+            this.Text = "ComposerX Mod  |  https://github.com/subgb/FiddlerComposerX";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ComposerModForm_FormClosing);
             this.tcRequestMod.ResumeLayout(false);
             this.tabHeadersMod.ResumeLayout(false);
