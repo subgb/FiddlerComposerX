@@ -133,6 +133,7 @@
             this.tbHeadersMod.Size = new System.Drawing.Size(552, 336);
             this.tbHeadersMod.TabIndex = 0;
             this.tbHeadersMod.WordWrap = false;
+            this.tbHeadersMod.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox_MouseClick);
             // 
             // tabCookiesMod
             // 
@@ -155,6 +156,7 @@
             this.tbCookiesMod.Size = new System.Drawing.Size(552, 336);
             this.tbCookiesMod.TabIndex = 1;
             this.tbCookiesMod.WordWrap = false;
+            this.tbCookiesMod.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox_MouseClick);
             // 
             // tabParamsMod
             // 
@@ -177,6 +179,7 @@
             this.tbParamsMod.Size = new System.Drawing.Size(552, 336);
             this.tbParamsMod.TabIndex = 2;
             this.tbParamsMod.WordWrap = false;
+            this.tbParamsMod.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox_MouseClick);
             // 
             // tabBodyRawMod
             // 
@@ -221,6 +224,7 @@
             this.tbFormMod.Size = new System.Drawing.Size(552, 336);
             this.tbFormMod.TabIndex = 1;
             this.tbFormMod.WordWrap = false;
+            this.tbFormMod.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBox_MouseClick);
             // 
             // tabBodyJsonMod
             // 

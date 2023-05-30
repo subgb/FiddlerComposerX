@@ -170,5 +170,24 @@ namespace FiddlerComposerX
             if (text.Length>0) text += "\r\n";
             return text;
         }
+
+        private void textBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            var tb = (TextBox)sender;
+            if (ModifierKeys.HasFlag(Keys.Control))
+            {
+                var lines = tb.Lines;
+                if (lines.Length <= 0) return;
+                var index = tb.GetCharIndexFromPosition(e.Location);
+                var line = tb.GetLineFromCharIndex(index);
+                var text = lines[line].Trim();
+                if (text != "")
+                {
+                    if (text.StartsWith("//")) lines[line] = text.TrimStart('/').TrimStart();
+                    else lines[line] = "// " + text;
+                    tb.Lines = lines;
+                }
+            }
+        }
     }
 }
