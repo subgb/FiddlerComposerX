@@ -183,9 +183,11 @@ namespace FiddlerComposerX
                 var text = lines[line].Trim();
                 if (text != "")
                 {
-                    if (text.StartsWith("//")) lines[line] = text.TrimStart('/').TrimStart();
-                    else lines[line] = "// " + text;
-                    tb.Lines = lines;
+                    var isComment = text.StartsWith("//");
+                    lines[line] = isComment ? text.TrimStart('/').TrimStart() : "// " + text;
+                    Utils.KeepTextBoxPosition(tb, () => tb.Lines = lines);
+                    index = tb.GetFirstCharIndexFromLine(line);
+                    tb.Select(index, isComment ? 0 : 3);
                 }
             }
         }

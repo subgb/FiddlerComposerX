@@ -1,6 +1,7 @@
 ﻿using Fiddler;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,6 +39,21 @@ namespace FiddlerComposerX
                 }
             }
             return null;
+        }
+
+        public static void KeepTextBoxPosition(TextBox tb, Action changer)
+        {
+            var fi = tb.GetCharIndexFromPosition(new Point(1, 5));
+            var li = tb.GetCharIndexFromPosition(new Point(1, tb.ClientSize.Height - 6));
+            var fl = tb.GetLineFromCharIndex(fi);
+            var ll = tb.GetLineFromCharIndex(li);
+            changer();
+            fi = tb.GetFirstCharIndexFromLine(fl);
+            tb.Select(li, 0);
+            tb.ScrollToCaret();
+            li = tb.GetFirstCharIndexFromLine(ll);
+            tb.Select(fi, 0);
+            tb.ScrollToCaret();
         }
 
         public static string ReplaceFirst(string text, string search, string replace)
