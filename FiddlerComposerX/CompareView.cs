@@ -20,6 +20,8 @@ namespace FiddlerComposerX
         public CompareView()
         {
             InitializeComponent();
+            lbLeft.Tag = tbLeft;
+            lbRight.Tag = tbRight;
         }
         
         private void textBox_DragEnter(object sender, DragEventArgs e)
@@ -231,6 +233,27 @@ namespace FiddlerComposerX
         {
             cbRespJson.Enabled = cbResp.Checked;
             UpdateContent();
+        }
+
+        private void label_Click(object sender, EventArgs e)
+        {
+            var label = sender as Label;
+            var textBox = label.Tag as TextBox;
+            var session = textBox.Tag as Session;
+            if (session == null) return;
+            var vi = session.ViewItem;
+            if (vi.ListView == null)
+            {
+                FiddlerObject.StatusText = $"Can't reveal {label.Text} in session list";
+                return;
+            };
+            foreach (ListViewItem i in vi.ListView.SelectedItems)
+            {
+                i.Selected = false;
+            }
+            vi.Selected = true;
+            vi.Focused = true;
+            vi.EnsureVisible();
         }
     }
 }

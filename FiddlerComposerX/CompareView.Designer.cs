@@ -108,6 +108,7 @@
             this.lbLeft.Name = "lbLeft";
             this.lbLeft.Size = new System.Drawing.Size(0, 12);
             this.lbLeft.TabIndex = 1;
+            this.lbLeft.Click += new System.EventHandler(this.label_Click);
             // 
             // lbRight
             // 
@@ -116,6 +117,7 @@
             this.lbRight.Name = "lbRight";
             this.lbRight.Size = new System.Drawing.Size(0, 12);
             this.lbRight.TabIndex = 2;
+            this.lbRight.Click += new System.EventHandler(this.label_Click);
             // 
             // btnCompare
             // 
