@@ -135,11 +135,8 @@ namespace FiddlerComposerX
             }
             sb.AppendLine();
 
-            sb.AppendLine("---- RESPONSE ----------------------------------------------");
-            sb.AppendLine($"{session.oResponse.headers.HTTPVersion} {session.oResponse.headers.HTTPResponseStatus}");
-            sb.AppendLine();
-
             sb.AppendLine("---- RESPONSE HEADERS --------------------------------------");
+            sb.AppendLine($"{session.oResponse.headers.HTTPVersion} {session.oResponse.headers.HTTPResponseStatus}");
             headers = session.oResponse.headers.ToArray();
             foreach (var item in headers)
             {
