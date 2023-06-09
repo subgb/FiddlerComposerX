@@ -42,8 +42,18 @@ namespace FiddlerComposerX
                 {
                     var textBox = sender as TextBox;
                     var array = (Session[])e.Data.GetData("Fiddler.Session[]");
-                    textBox.Text = PrettySession(array[0]);
-                    textBox.Tag = array[0];
+                    if (array.Length==2)
+                    {
+                        tbLeft.Text = PrettySession(array[0]);
+                        tbLeft.Tag = array[0];
+                        tbRight.Text = PrettySession(array[1]);
+                        tbRight.Tag = array[1];
+                    }
+                    else
+                    {
+                        textBox.Text = PrettySession(array[0]);
+                        textBox.Tag = array[0];
+                    }
                     if (tbLeft.Tag != null) lbLeft.Text = "#" + (tbLeft.Tag as Session).id;
                     if (tbRight.Tag != null) lbRight.Text = "#" + (tbRight.Tag as Session).id;
                 }
