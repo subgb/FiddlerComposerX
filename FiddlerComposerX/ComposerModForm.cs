@@ -142,14 +142,14 @@ namespace FiddlerComposerX
 
         private string UrlStringify()
         {
-            var qs = string.Join("&", DropCommentLines(tbParamsMod.Text));
+            var qs = string.Join("&", DropCommentLines(tbParamsMod.Text).Select(x => x.Trim('&')));
             if (qs.Length > 0) return tbUrl.Text + "?" + qs;
             return tbUrl.Text;
         }
 
         private string HeadersStringify()
         {
-            var cookies = string.Join("; ", DropCommentLines(tbCookiesMod.Text));
+            var cookies = string.Join("; ", DropCommentLines(tbCookiesMod.Text).Select(x => x.TrimEnd(';')));
             var lines = DropCommentLines(tbHeadersMod.Text).Select(line =>
             {
                 if (!line.StartsWith("Cookie:", StringComparison.OrdinalIgnoreCase)) return line;
